@@ -1,19 +1,10 @@
 import json
 import re
 
-def diagramm_func(name):
-    for item_dict in pokemon_full_json:
-        if (item_dict["name"] == name):
-            for stat in item_dict["stats"]:
-                if ( stat == "attack" ):
-                    print("attack : ", 'X' * item_dict["stats"]["attack"])
-                if ( stat == "defense" ):
-                    print("defense: ", 'X' * item_dict["stats"]["defense"])
-                if ( stat == "sp.atk" ):
-                    print("sp.atk : ", 'X' * item_dict["stats"]["sp.atk"])
-                if ( stat == "sp.def" ):
-                    print("sp.def : ", 'X' * item_dict["stats"]["sp.def"])
-    return 0
+def draw_block(stat,val):
+    progress = 'X' * val
+    param = stat.ljust(8)
+    print(param, progress)
 
 file = open('pokemon_full.json', 'r')
 pokemon_full = file.read()
@@ -44,4 +35,8 @@ for item in pokemon_full_json:
 print()
 print("Enter the Name: ")
 name =  str(input())
-diagramm_func(name)
+for item in pokemon_full_json:
+    if (item["name"] == name):
+        for stat, val in item["stats"].items():
+            if stat in ["attack", "defense", "sp.atk", "sp.def"]:
+                draw_block(stat, val)
